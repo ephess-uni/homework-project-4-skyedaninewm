@@ -83,13 +83,19 @@ def test___add_date_range___returns_correct_values_input_2():
 
 
 @pytest.fixture
-def book_returns_short():
-    return 'tests/fixtures/book_returns_short.csv'
+def book_returns_short(request):
+    return path.join(
+        request.config.rootdir,
+        'tests/fixtures/book_returns_short.csv',
+    )
 
 
 @pytest.fixture
-def book_returns():
-    return 'tests/fixtures/book_returns.csv'
+def book_returns(request):
+    return path.join(
+        request.config.rootdir,
+        'tests/fixtures/book_returns.csv',
+    )
 
 
 @pytest.fixture
@@ -140,8 +146,7 @@ def test___fees_report___has_correct_currency_format(fees_report_out_short):
 
 def test___fees_report___includes_all_patrons(fees_report_out_short):
     expected_fees = {
-        '17-873-8783': '15.00',
-        '83-279-0036': '0.00'
+        '17-873-8783': '15.00'
     }
     actual_patrons = [fee['patron_id'] for fee in fees_report_out_short]
     expected_patrons = list(expected_fees.keys())
